@@ -1,10 +1,10 @@
 #!/bin/bash
 
 NAME="ppg_anno"
-DIR=/home/zg78/ppg_anno
+DIR=/home/*/ppg_anno
 USER=zg78
 WORKERS=1
-BIND=unix:/home/zg78/ppg_anno/run/gunicorn.sock
+BIND=unix:/home/*/ppg_anno/run/gunicorn.sock
 DJANGO_SETTINGS_MODULE=ppg_anno.settings
 DJANGO_WSGI_MODULE=ppg_anno.wsgi
 LOG_LEVEL=error
