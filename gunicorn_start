@@ -1,0 +1,25 @@
+#!/bin/bash
+
+NAME="ppg_anno"
+DIR=/home/zg78/ppg_anno
+USER=zg78
+WORKERS=1
+BIND=unix:/home/zg78/ppg_anno/run/gunicorn.sock
+DJANGO_SETTINGS_MODULE=ppg_anno.settings
+DJANGO_WSGI_MODULE=ppg_anno.wsgi
+LOG_LEVEL=error
+ENV_NAME="ppg_anno
+
+cd $DIR
+conda activate $ENV_NAME
+
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DIR:$PYTHONPATH
+
+exec /anaconda3/envs/ppg_anno/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+  --name $NAME \
+  --workers $WORKERS \
+  --user=$USER \
+  --bind=$BIND \
+  --log-level=$LOG_LEVEL \
+  --log-file=-

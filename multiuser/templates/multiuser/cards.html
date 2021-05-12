@@ -1,0 +1,151 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PPG Annotator</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    <style>
+        nav {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+        }
+        p{
+            padding-left: 15px;
+        }
+
+        .form-group{
+            display: inline-block;
+        }
+
+        li{
+            display: inline-block;
+        }
+        form, label, .badge-text, p {
+            color: white !important;
+        }
+        .card {
+          margin-top: 20px;
+        }
+
+        .card-title {
+          margin-bottom: 0.3rem;
+        }
+
+        .cat {
+          display: inline-block;
+          margin-bottom: 1rem;
+        }
+
+        .fa-users {
+          margin-left: 1rem;
+        }
+
+        .card-footer {
+          font-size: 0.8rem;
+        }
+
+        footer{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 2.5rem;            /* Footer height */
+        }
+
+        .container{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">
+            PPG Annotation Tool Menu - Welcome {{ current_user }} !
+        </span>
+
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">User Annotation</h4>
+                        <small class="text-muted cat">
+                            <i class="far fa-clock text-info"></i> {{ current_idx }} out of {{ data_total }}
+                            <i class="fas fa-users text-info"></i> finished
+                        </small>
+                        <form action="anno_user" method="get">
+                            <button type="submit" class="btn btn-outline-primary"><strong>To Annotate</strong></button>
+                        </form>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-transparent border-top-0">
+                        <div class="progress" style="height: 15px; width: 500px">
+                            <div class="progress-bar" role="progressbar" style="width: {{ progress }}%; color: black;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ progress }}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">View {{ current_user }}'s Annotations</h4>
+                        <small class="text-muted cat">
+                            <i class="far fa-clock text-info"></i>
+                            <i class="fas fa-users text-info"></i>
+                        </small>
+                        <form action="viz_user" method="get">
+                            <button type="submit" class="btn btn-outline-primary"><strong>View</strong></button>
+                        </form>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-transparent border-top-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">View All User Annotations</h4>
+                        <small class="text-muted cat">
+                            {% if check_all_finished_feedback %}
+                                <span class="badge badge-danger badge-text" style="padding-left: 5px"><h6><i>{{ check_all_finished_feedback }}</i></h6></span>
+                            {% endif %}
+                            <i class="far fa-clock text-info"></i>
+                            <i class="fas fa-users text-info"></i>
+                        </small>
+                        <form action="viz_all" method="get">
+                            <button type="submit" class="btn btn-outline-primary"><strong>View</strong></button>
+                        </form>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-transparent border-top-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <nav class="navbar navbar-dark bg-dark" >
+            <div class="btn-group">
+                <form action="log_out" method="get">
+                    <button type="submit" class="btn btn-light"><strong>Log Out</strong></button>
+                </form>
+            </div>
+        </nav>
+    </footer>
+
+</body>

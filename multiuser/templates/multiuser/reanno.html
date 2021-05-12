@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PPG Annotator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        nav {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+        }
+        body {
+            font-family: "Segoe UI", Frutiger;
+        }
+        p{
+            padding-left: 15px;
+        }
+
+        footer{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 2.5rem;            /* Footer height */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">
+            Re-Annotating - User {{ current_user }} - Index: {{ current_idx }}
+        </span>
+
+    </nav>
+
+
+    <nav class="navbar navbar-dark bg-dark" >
+        <div class="btn-group" role="group">
+
+            <form action="reanno_clear_anno_user" method="get">
+                <button type="submit" class="btn btn-outline-danger"><strong>CLEAR</strong></button>
+            </form>
+            <div style="width: 15px;"></div>
+
+            <form action="reanno_export_anno_user" method="get">
+                <button type="submit" class="btn btn-outline-success"><strong>EXPORT</strong></button>
+            </form>
+            <div style="width: 15px;"></div>
+
+            <form action="reanno_no_artifact_user" method="get">
+                <button type="submit" class="btn btn-secondary"><strong>NO ARTEFACT</strong></button>
+            </form>
+            <div style="width: 15px;"></div>
+
+            <form action="reanno_all_artifact_user" method="get">
+                <button type="submit" class="btn btn-warning"><strong>ALL ARTEFACT</strong></button>
+            </form>
+            <div style="width: 15px;"></div>
+
+            <form action="reanno_submit_anno_user" method="get">
+                <button type="submit" class="btn btn-primary"><strong>SUBMIT</strong></button>
+            </form>
+
+            <div style="width: 15px;"></div>
+
+        </div>
+
+        {% if feedback %}
+            <div class="d-inline p-2 bg-light text-black">{{ feedback }}</div>
+        {% endif %}
+    </nav>
+
+    <span class="d-block px-3 bg-dark text-white"><strong>Parameters:</strong> {{ param }}</span>
+    <span class="shadow-sm px-3 mb-0 bg-white rounded">Please drag and draw annotations</span>
+
+    <div style="height: 260px;">
+        {%load plotly_dash%}
+        {%plotly_app name=dash_app ratio=0.35%}
+        {% if relayout %}
+        <h4>{{ relayout }}</h4>
+        {% endif %}
+    </div>
+
+    <footer>
+        <nav class="navbar navbar-dark bg-dark" >
+            <div class="btn-group">
+                <form action="log_out" method="get">
+                    <button type="submit" class="btn btn-light"><strong>Log Out</strong></button>
+                </form>
+
+
+                <div style="width: 15px;"></div>
+                <form action="back_to_viz" method="get">
+                    <button type="submit" class="btn btn-outline-light"><strong>Return to visualizations</strong></button>
+                </form>
+
+
+                <div style="width: 15px;"></div>
+                <form action="back_to_menu" method="get">
+                    <button type="submit" class="btn btn-outline-light"><strong>Back to menu</strong></button>
+                </form>
+            </div>
+        </nav>
+    </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

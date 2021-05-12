@@ -1,0 +1,152 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PPG Annotator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        nav {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+        p{
+            padding-left: 15px;
+        }
+
+        .form-group{
+            display: inline-block;
+        }
+        .color-sample{
+            display: inline-block;
+        }
+        li{
+            display: inline-block;
+        }
+        form, label, p {
+            color: white !important;
+        }
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">
+            PPG Annotation Visualization - All Users - Current Displaying: {{ displaying }} - Agreeance: {{ agreeance }}
+        </span>
+        <div class="color-sample">
+            {% if user_colors %}
+                {% for user, color in user_colors %}
+                    <span class="badge" style="background:{{ color }}; padding-left: 5px"><h4>{{ user }}</h4></span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+    </nav>
+
+
+    <nav class="navbar navbar-dark bg-dark" >
+        <div class="btn-group" role="group">
+            <form action="last_all_user" method="get">
+                <button type="submit" class="btn btn-outline-light"><strong>Last Page</strong></button>
+            </form>
+            <div style="width: 15px;"></div>
+
+            <form action="next_all_user" method="get">
+                <button type="submit" class="btn btn-outline-light"><strong>Next Page</strong></button>
+            </form>
+            <div style="width: 15px;"></div>
+
+            <form action="viz_export_anno_all_user" method="get">
+                <button type="submit" class="btn btn-outline-success"><strong>Export</strong></button>
+            </form>
+
+            <div style="width: 15px;"></div>
+
+            <form action="sort_anno_all_user" method="post">
+                {% csrf_token %}
+                {% if sort_by_index %}
+                    <input id="By Index" type="radio" name="sort_method" value="index" checked="checked">
+                    <label for="By Index">By Index</label>
+                {% else%}
+                    <input id="By Index" type="radio" name="sort_method" value="index">
+                    <label for="By Index">By Index</label>
+                {% endif %}
+
+                {% csrf_token %}
+                {% if sort_by_agreeance %}
+                    <input id="By Agreeance" type="radio" name="sort_method" value="agreeance" checked="checked">
+                    <label for="By Agreeance">By Agreeance</label>
+                {% else %}
+                    <input id="By Agreeance" type="radio" name="sort_method" value="agreeance">
+                    <label for="By Agreeance">By Agreeance</label>
+                {% endif %}
+
+                <button type="submit" class="btn btn-outline-info"><strong>Sort</strong></button>
+            </form>
+
+        </div>
+
+        {% if feedback %}
+            <div class="d-inline p-2 bg-light text-black">{{ feedback }}</div>
+{#            <span class="badge badge-primary"><strong>{{ feedback }}</strong></span>#}
+        {% endif %}
+    </nav>
+
+    <nav class="navbar navbar-light bg-dark">
+{#        <li class="nav-item active">#}
+        <div class="form-group" style="margin-bottom: 0px;">
+            <form class="form-horizontal" method="post" action="inspect_index_all_user" style ='display: inline-block; padding-right: 15px'>
+                {% csrf_token %}
+                    <label for="inspect_index" class="sr-only">Jump to annotation No. </label>
+                    <div class="form-group">
+                        <input class="form-control" id="inspect_index" name="inspect_index" placeholder="Index (e.g. 10)">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">GO</button>
+            </form>
+
+            <form class="form-horizontal" method="post" action="reanno_index_all_user" style ='display: inline-block;'>
+                {% csrf_token %}
+                    <label for="reanno_index" class="sr-only">Re-annotate No. </label>
+                    <div class="form-group">
+                        <input class="form-control" id="reanno_index" name="reanno_index" placeholder="Index (e.g. 10)">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Re-Annotate</button>
+            </form>
+{#        </li>#}
+            </div>
+    </nav>
+
+
+    {% if divs %}
+        {% for div, title in divs %}
+            <span class="shadow-sm px-3 mb-0 bg-white rounded"><strong>{{ title }}</strong></span>
+            <div style="width: 2000px">{{ div|safe }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <footer>
+        <nav class="navbar navbar-dark bg-dark" >
+            <div class="btn-group">
+                <form action="log_out" method="get">
+                    <button type="submit" class="btn btn-light"><strong>Log Out</strong></button>
+                </form>
+                <div style="width: 15px;"></div>
+                <form action="back_to_menu" method="get">
+                    <button type="submit" class="btn btn-outline-light"><strong>Back to menu</strong></button>
+                </form>
+            </div>
+        </nav>
+    </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+
+{#<footer>#}
+{#</footer>#}
+</html>
