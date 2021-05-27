@@ -161,8 +161,6 @@ def render_plots(request, idx):
     fig.update_yaxes(fixedrange=True)
     fig.update_layout(
         dragmode="drawrect",
-        # dragmode="select",
-        # selectdirection="h",
         newshape=dict(fillcolor="cyan", opacity=0.3),
         margin=dict(t=0, b=0, l=0),
     )
