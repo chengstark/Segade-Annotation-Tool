@@ -1,4 +1,4 @@
-# SegMADe-Annotation-Tool
+# Segade-Annotation-Tool
 SegMADe Web Annotation Tool
 
 # Installation
