@@ -1,5 +1,5 @@
 # Segade-Annotation-Tool
-SegMADe Web Annotation Tool
+Segade Web Annotation Tool
 
 # Installation
 Install the environment with ppg_anno_server_no_builds.yml\
